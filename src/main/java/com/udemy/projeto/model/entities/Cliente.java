@@ -8,6 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Cliente implements Serializable {
@@ -18,12 +24,16 @@ public class Cliente implements Serializable {
 	private Integer id;
 	
 	@Column(nullable = false)
+	@NotEmpty(message = "{campo.nome.obrigatorio}")
 	private String nome;
 	
 	@Column(nullable = false)
+	@NotNull(message = "{campo.cpf.obrigatorio}")
+	@CPF(message = "{campo.cpf.invalido}")
 	private String cpf;
 	
-	
+	@Column(updatable = false) // Não atualizar a data de cadastro
+	@JsonFormat(pattern = "dd/MM/yyy") // Máscara para o formato da data
 	private Date dataCadastro;
 	
 	public Cliente() {
@@ -59,7 +69,7 @@ public class Cliente implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 	
-	@PrePersist
+	@PrePersist // Fazer esse método antes dos outros
 	public void prePersist() {
 		setDataCadastro(new Date());
 	}

@@ -23,8 +23,8 @@ public class ServicoPrestado implements Serializable {
 	
 	private Double valor;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_cliente")
+	@ManyToOne // Um cliente pode fazer muitos serviços e um serviço é feito por apenas um cliente
+	@JoinColumn(name = "id_cliente") // Indicação da chave estrangeira na tabela ServicoPrestado
 	private Cliente cliente;
 	
 	public ServicoPrestado() {
