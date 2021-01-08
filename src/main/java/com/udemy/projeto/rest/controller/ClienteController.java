@@ -1,5 +1,7 @@
 package com.udemy.projeto.rest.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,11 @@ public class ClienteController {
 	@ResponseStatus(HttpStatus.CREATED) // Definir o código de status que foi criado com sucesso
 	public Cliente salvarCliente(@RequestBody @Valid Cliente cliente) {
 		return clienteRepository.save(cliente);
+	}
+	
+	@GetMapping
+	public List<Cliente> encontrarTodos(){
+		return clienteRepository.findAll();
 	}
 	
 	@GetMapping("{id}") // Encontra um recurso no servidor
